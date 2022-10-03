@@ -1,18 +1,5 @@
 import { describe, it, expect } from "vitest";
-
-function countSheep(sheep) {
-	if (!Array.isArray(sheep)) {
-		throw new Error()
-	}
-
-	const chosenColor = "rojo"
-	const availableLetters = ["n", "a"]
-
-	return sheep.filter(item => {
-		return item.color === chosenColor &&
-			item.name.toLowerCase().includes(...availableLetters)
-	});
-}
+import { countSheep } from "./countSheep"
 
 describe("Count sheep", () => {
 	// it("countSheep should be a function", () => {
@@ -94,4 +81,37 @@ describe("Count sheep", () => {
 			name: "NA"
 		}])
 	})
+
+	it("Should contain only one letter n and one a strictly", () => {
+		const arr = [
+			{
+				color: "rojo",
+				name: "Nnnnnn"
+			},
+			{
+				color: "rojo",
+				name: "nnnnnAAAA"
+			}
+		]
+
+		expect(countSheep(arr)).toStrictEqual([
+			{
+				color: "rojo",
+				name: "nnnnnAAAA"
+			}
+		])
+	})
+	// it("Should be able to pass this exercise", () => {
+	// 	const ovejas = [
+	// 		{ name: 'Noa', color: 'azul' },
+	// 		{ name: 'Euge', color: 'rojo' },
+	// 		{ name: 'Navidad', color: 'rojo' },
+	// 		{ name: 'Ki Na Ma', color: 'rojo'},
+	// 		{ name: 'AAAAAaaaaa', color: 'rojo' },
+	// 		{ name: 'Nnnnnnnn', color: 'rojo'}
+	// 	]
+
+	// 	expect(countSheep(ovejas)).toStrictEqual([{ name: 'Navidad', color: 'rojo' },
+	// 	{ name: 'Ki Na Ma', color: 'rojo' }])
+	// })
 })

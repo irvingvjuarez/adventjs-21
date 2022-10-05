@@ -10,22 +10,24 @@ const isLetterValid = (letter) => {
 
 	if (errMsg !== "") throw new Error(errMsg);
 
-	const validationRegexp = new RegExp(/\([^\{\}\[\]]+\)/gi);
-	const remainingLettersRegexp = new RegExp(/[\(\)\{\}\[\]]/);
+	const closedParenthesis = new RegExp(/\([^\{\}\[\]]+\)/gi);
+	const noValidChars = new RegExp(/[\(\)\{\}\[\]]/);
 
-	const getMatch = (str) => {
-		const match = str.match(validationRegexp)
-		if (match) {
-			const newStr = match[0].split("")
-			newStr.shift()
-			newStr.pop()
-			return getMatch(newStr.join(""))
+	const isValid = (str) => {
+		const parenthesisChecked = str.match(closedParenthesis)
+		if (parenthesisChecked) {
+			const subLetter = parenthesisChecked[0].split("")
+
+			// Removing () from borders
+			subLetter.shift()
+			subLetter.pop()
+			return isValid(subLetter.join(""))
 		}
 
-		return !remainingLettersRegexp.test(str)
+		return !noValidChars.test(str)
 	}
 
-	return getMatch(letter)
+	return isValid(letter)
 }
 
 describe("Is letter valid test", () => {

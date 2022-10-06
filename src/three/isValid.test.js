@@ -1,15 +1,5 @@
 import { describe, expect, it } from "vitest"
-
-const isValid = (letter) => {
-	if (!letter || typeof letter !== "string") throw new Error()
-
-	let posibleGifts = letter.split("(");
-  let expresion = /[\{\}\[\]]/gm;
-  if (posibleGifts.some((item) => item.match(expresion))) return false;
-  if (posibleGifts.some((item) => item.indexOf(")") === 0)) return false;
-
-  return posibleGifts.some((item) => item.includes(")"));
-}
+import { isValid } from "./isValid"
 
 describe("Third exercise tests", () => {
 	// it("isValid should be a function", () => {

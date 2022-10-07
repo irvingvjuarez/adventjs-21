@@ -4,10 +4,10 @@ const createTree = (height) => {
 	if (!height || typeof height !== "number") throw new Error()
 	if (height < 1 || height > 100) throw new Error()
 
-	const treeBase = `____#____\n____#____`
 	let tree = ""
 	let spaceBtwAstheriscs = height - 1
 	let asthericsNum = 1
+	const treeBase = `${"_".repeat(spaceBtwAstheriscs)}#${"_".repeat(spaceBtwAstheriscs)}\n${"_".repeat(spaceBtwAstheriscs)}#${"_".repeat(spaceBtwAstheriscs)}`
 
 	for (let i = 0; i < height; i++) {
 		const astherics = "*".repeat(asthericsNum)
@@ -70,8 +70,9 @@ describe("Create Xmas Tree tests", () => {
 	// })
 
 	it("Should return the correct body of the tree plus the base of it", () => {
-		expect(createTree(1)).toBe(`*\n____#____\n____#____`)
-		expect(createTree(2)).toBe(`_*_\n***\n____#____\n____#____`)
-		expect(createTree(3)).toBe(`__*__\n_***_\n*****\n____#____\n____#____`)
+		expect(createTree(1)).toBe(`*\n#\n#`)
+		expect(createTree(2)).toBe(`_*_\n***\n_#_\n_#_`)
+		expect(createTree(3)).toBe(`__*__\n_***_\n*****\n__#__\n__#__`)
 	})
 })
+

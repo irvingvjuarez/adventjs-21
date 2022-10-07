@@ -1,25 +1,5 @@
 import { describe, it, expect } from "vitest"
-
-const createTree = (height) => {
-	if (!height || typeof height !== "number") throw new Error()
-	if (height < 1 || height > 100) throw new Error()
-
-	let tree = ""
-	let spaceBtwAstheriscs = height - 1
-	let asthericsNum = 1
-	const treeBase = `${"_".repeat(spaceBtwAstheriscs)}#${"_".repeat(spaceBtwAstheriscs)}\n${"_".repeat(spaceBtwAstheriscs)}#${"_".repeat(spaceBtwAstheriscs)}`
-
-	for (let i = 0; i < height; i++) {
-		const astherics = "*".repeat(asthericsNum)
-		const spaces = "_".repeat(spaceBtwAstheriscs)
-		tree += `${spaces}${astherics}${spaces}\n`
-
-		asthericsNum += 2
-		spaceBtwAstheriscs -= 1
-	}
-
-	return tree + treeBase
-}
+import { createTree } from "./createTree"
 
 describe("Create Xmas Tree tests", () => {
 	// it("Function createTree must be a function", () => {

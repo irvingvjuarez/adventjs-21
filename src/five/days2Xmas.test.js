@@ -1,20 +1,5 @@
 import { describe, expect, it } from "vitest";
-
-const days2Xmas = (date) => {
-	console.log(typeof date)
-	if (!date || date instanceof Date === false) throw new Error()
-
-	const currentDate = new Date(date)
-	const targetDate = new Date("Dec 25, 2021")
-
-	const remainingMiliseconds = targetDate - currentDate
-	const remainingSeconds = remainingMiliseconds / 1000
-	const remainingMinutes = remainingSeconds / 60
-	const remainingHours = remainingMinutes / 60
-	const remainingDays = Math.ceil(remainingHours / 24)
-
-	return remainingDays
-}
+import { days2Xmas } from "./days2Xmas"
 
 describe("Fifth algorithm challenge test", () => {
 	// it("days2Xmas should be a function", () => {

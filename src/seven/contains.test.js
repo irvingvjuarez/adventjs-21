@@ -1,23 +1,5 @@
 import { describe, expect, it } from "vitest";
-
-const contains = (stock, target) => {
-	if (!stock || !target) throw new Error()
-	if (stock instanceof Object === false || typeof target !== "string") throw new Error()
-
-	const entries = Object.entries(stock)
-	for(let entry of entries) {
-		const evaluated = entry[1]
-
-		if (evaluated instanceof Object) {
-			const subEntryResult = contains(evaluated, target)
-			if (subEntryResult) return true
-		} else if (typeof evaluated === "string"){
-			if (evaluated === target) return true
-		}
-	}
-
-	return false
-}
+import { contains } from "./contains"
 
 describe("Seventh exercise test", () => {
 	// it("contains should be a function datatype", () => {
@@ -53,17 +35,17 @@ describe("Seventh exercise test", () => {
 		expect(contains(obj1, "mando")).toBe(true)
 	})
 
-	// it("Should be evaluate deeper levels of the object in search of the target", () => {
-	// 	const obj = {
-	// 		'baul': {
-	// 			'fondo': {
-	// 				'producto': 'cd-rom',
-	// 				'producto2': 'disquette',
-	// 				'producto3': 'mando'
-	// 			}
-	// 		}
-	// 	}
+	it("Should be evaluate deeper levels of the object in search of the target", () => {
+		const obj = {
+			'baul': {
+				'fondo': {
+					'producto': 'cd-rom',
+					'producto2': 'disquette',
+					'producto3': 'mando'
+				}
+			}
+		}
 
-	// 	expect(contains(obj, "disquette")).toBe(true)
-	// })
+		expect(contains(obj, "disquette")).toBe(true)
+	})
 })

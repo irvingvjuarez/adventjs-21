@@ -1,33 +1,5 @@
 import { describe, expect, it } from "vitest";
-
-const groupBy = (items, separatedBy) => {
-	const invalidRequest = !items
-		|| !separatedBy
-		|| !Array.isArray(items)
-		|| (separatedBy instanceof Function === false && typeof separatedBy !== "string")
-
-	if (invalidRequest) throw new Error()
-
-	const groupedValues = {}
-
-	if (typeof separatedBy === "string") {
-		// property scenario
-		let differentProps = items.map(item => item[separatedBy])
-		differentProps = [...new Set(differentProps)]
-		differentProps.forEach(prop => {
-			groupedValues[prop] = items.filter(item => item[separatedBy] === prop)
-		})
-	} else {
-		// function scenario
-		let differentProps = items.map(item => separatedBy(item))
-		differentProps = [...new Set(differentProps)]
-		differentProps.forEach(prop => {
-			groupedValues[prop] = items.filter(item => separatedBy(item) === prop)
-		})
-	}
-
-	return groupedValues
-}
+import { groupBy } from "./groupBy"
 
 describe("groupBy algorithm test", () => {
 	// it("groupBy should be a Function", () => {

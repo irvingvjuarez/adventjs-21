@@ -1,23 +1,5 @@
 import { describe, expect, it } from "vitest";
-
-const maxProfit = (prices) => {
-	if (!prices || prices instanceof Array === false) throw new Error()
-
-	let differences = []
-	let size = prices.length
-
-	for (let i = 0; i < size; i++) {
-		const currentEvaluated = prices[0]
-		for (let index in prices) {
-			differences.push(prices[index] - currentEvaluated)
-		}
-		prices.shift()
-	}
-
-	const max = Math.max(...differences)
-
-	return max > 0 ? max : -1
-}
+import { maxProfit } from "./maxProfit"
 
 describe("Eight exercise test", () => {
 	// it("maxProfit should be a function", () => {

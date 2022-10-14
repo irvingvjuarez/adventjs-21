@@ -1,5 +1,8 @@
 export const shouldBuyFidelity = (times) => {
 	if (!times || typeof times !== "number") throw new Error()
 
-	return times >= 24
+	// I know this beforehand
+	const isConvenientFrom = 24
+
+	return times >= isConvenientFrom
 }

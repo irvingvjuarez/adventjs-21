@@ -13,17 +13,13 @@ const getCoins = (change) => {
 		const plainCoinsChange = []
 		while (change > 0) {
 			for (let i = 5; i >= 0; i--){
-				if (change - coinsValues[i] >= 0 && change < coinsValues[i]) {
+				if (change - coinsValues[i] >= 0) {
 					change -= coinsValues[i]
 					plainCoinsChange.push(coinsValues[i])
+					break
 				}
 			}
-			change = 0
 		}
-
-		console.log({
-			plainCoinsChange
-		})
 
 		plainCoinsChange.forEach(value => {
 			const index = coinsValues.findIndex(coin => coin === value)
@@ -71,5 +67,9 @@ describe("getCoins tests", () => {
 
 	it("Should be able to determine the same number more than once and return the respective array of values", () => {
 		expect(getCoins(100)).toStrictEqual([0,0,0,0,0,2])
+	})
+
+	it("Should able to determine different coin values", () => {
+		expect(getCoins(16)).toStrictEqual([1, 0, 1, 1, 0, 0])
 	})
 })

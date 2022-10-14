@@ -1,35 +1,5 @@
 import { describe, expect, it } from "vitest";
-
-const getCoins = (change) => {
-	if (!change || typeof change !== "number") throw new Error()
-
-	const coinsValues = [1,2,5,10,20,50]
-	const returnedCoins = [0,0,0,0,0,0]
-
-	if (coinsValues.includes(change)) {
-		const index = coinsValues.findIndex(coin => coin === change)
-		returnedCoins[index] = 1
-	} else {
-		const plainCoinsChange = []
-		while (change > 0) {
-			for (let i = 5; i >= 0; i--){
-				if (change - coinsValues[i] >= 0) {
-					change -= coinsValues[i]
-					plainCoinsChange.push(coinsValues[i])
-					break
-				}
-			}
-		}
-
-		plainCoinsChange.forEach(value => {
-			const index = coinsValues.findIndex(coin => coin === value)
-			const actualVal = returnedCoins[index]
-			returnedCoins[index] = actualVal + 1
-		})
-	}
-
-	return returnedCoins
-}
+import { getCoins } from "./getCoins"
 
 describe("getCoins tests", () => {
 	// it("getCoins should be a function", () => {

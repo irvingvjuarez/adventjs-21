@@ -1,19 +1,5 @@
 import { describe, expect, it } from "vitest";
-
-const shouldBuyFidelity = (times) => {
-	if (!times || typeof times !== "number") throw new Error()
-
-	const ticketPrice = 12
-	const withoutFidelity = ticketPrice * times
-
-	let fidelity = 250
-	for (let i = 1; i <= times; i++) {
-		const relativePrice = ticketPrice * (0.75 ** i)
-		fidelity += relativePrice
-	}
-
-	return fidelity < withoutFidelity
-}
+import { shouldBuyFidelity } from "./shouldBuyFidelity"
 
 describe("Eleven exercise tests", () => {
 	// it("shouldBuyFidelity should be a funciton", () => {

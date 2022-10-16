@@ -1,26 +1,5 @@
 import { describe, expect, it } from "vitest";
-
-const getMinJump = (obstacles) => {
-	if (!obstacles || !Array.isArray(obstacles)) throw new Error()
-
-	if (obstacles.length <= 0) return 1
-	const maxObstacle = Math.max(...obstacles)
-	let jump = 1
-
-	for (let i = 2; i <= maxObstacle; i++) {
-		const obstaclesInCurrentJump = obstacles.filter(obstacle =>
-			obstacle % i === 0
-		).length
-
-		if (obstaclesInCurrentJump === 0){
-			jump = i
-			break
-		}
-	}
-
-
-	return jump
-}
+import { getMinJump } from "./getMinJump"
 
 describe("Twelve exercise tests", () => {
 	// it("getMinJump should be a function", () => {

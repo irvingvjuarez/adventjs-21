@@ -1,18 +1,5 @@
 import { describe, expect, it } from "vitest";
-
-const wrapGifts = (gifts) => {
-	if (!gifts || !Array.isArray(gifts)) throw new Error()
-
-	let wrappedPresents = []
-	if (gifts.length === 0) return wrappedPresents
-
-	const edgeWraps = "*".repeat(gifts[0].length) + "**"
-	wrappedPresents = gifts.map(gift => `*${gift}*`)
-	wrappedPresents.unshift(edgeWraps)
-	wrappedPresents.push(edgeWraps)
-
-	return wrappedPresents
-}
+import { wrapGifts } from "./wrapGifts"
 
 describe("Thirteen exercise tests", () => {
 	// it("wrapGifts should be a function", () => {

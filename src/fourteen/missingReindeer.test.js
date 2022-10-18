@@ -1,20 +1,5 @@
 import { describe, expect, it } from "vitest";
-
-const missingReindeer = (reindeer) => {
-	if (!reindeer || !Array.isArray(reindeer)) throw new Error()
-
-	let missingId = null
-
-  reindeer.sort().every((id, index) => {
-		if (id !== index) {
-			missingId = index
-			return false
-		}
-		return true
-	})
-
-  return missingId !== null ? missingId : reindeer.length
-}
+import { missingReindeer } from "./missingReindeer"
 
 describe("Missing reindeer tests", () => {
 	// it("missingReindeer should be a function", () => {

@@ -3,20 +3,17 @@ import { describe, expect, it } from "vitest";
 const missingReindeer = (reindeer) => {
 	if (!reindeer || !Array.isArray(reindeer)) throw new Error()
 
-	const reindeerSize = reindeer.length
-	if (reindeerSize === 0 || reindeerSize > 100) return 0
-	let missingOne = null
+	let missingId = null
 
-	const maximum = Math.max(...reindeer)
-	reindeer = reindeer.sort()
-	for (let i = 0; i <= maximum; i++) {
-		if (i !== reindeer[i]) {
-			missingOne = i
-			break
+  reindeer.sort().every((id, index) => {
+		if (id !== index) {
+			missingId = index
+			return false
 		}
-	}
+		return true
+	})
 
-	return missingOne === null ? maximum + 1 : missingOne;
+  return missingId !== null ? missingId : reindeer.length
 }
 
 describe("Missing reindeer tests", () => {
@@ -56,10 +53,5 @@ describe("Missing reindeer tests", () => {
 
 	it("Should be able to predict the missing reindeer if it is at the beginning of the array", () => {
 		expect(missingReindeer([1])).toBe(0)
-	})
-
-	it("Should return 0 if the array has more than 100 elements", () => {
-		const arr = new Array(101)
-		expect(missingReindeer(arr)).toBe(0)
 	})
 })

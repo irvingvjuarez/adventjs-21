@@ -13,11 +13,13 @@ const checkSledJump = (jumps) => {
 		if (i > 0) {
 			if (jumps[i - 1] < jumps[i]) { // increasing
 				if (currentDirection !== "increasing") {
-					directions.push("increasing")
+					currentDirection = "increasing"
+					directions.push(currentDirection)
 				}
 			} else if (jumps[i - 1] > jumps[i]) { // decreasing
 				if (currentDirection !== "decreasing") {
-					directions.push("decreasing")
+					currentDirection = "decreasing"
+					directions.push(currentDirection)
 				}
 			} else { // equal
 				return false
@@ -60,5 +62,14 @@ describe("checkSledJump tests", () => {
 
 	it("Should be able to analyze if the array form an curve", () => {
 		expect(checkSledJump([0,1,0])).toBe(true)
+		expect(checkSledJump([1,2,3,2,1])).toBe(true)
+	})
+
+	it("Should be able to analyze if the curve only increased but never decreased", () => {
+		expect(checkSledJump([1, 2, 3])).toBe(false)
+	})
+
+	it("Should be able to analyze if it increases or decreases more than once (if it resembles a roller coaster)", () => {
+		expect(checkSledJump([1, 2, 3, 2, 1, 2, 3])).toBe(false)
 	})
 })

@@ -1,37 +1,5 @@
 import { describe, expect, it } from "vitest";
-
-const checkSledJump = (jumps) => {
-	if (!jumps || !Array.isArray(jumps)) throw new Error()
-
-	const { length } = jumps
-	if (length < 3) return false
-
-	let currentDirection = "increasing"
-	const directions = [currentDirection]
-
-	for (let i = 0; i < length; i++) {
-		if (i > 0) {
-			if (jumps[i - 1] < jumps[i]) { // increasing
-				if (currentDirection !== "increasing") {
-					currentDirection = "increasing"
-					directions.push(currentDirection)
-				}
-			} else if (jumps[i - 1] > jumps[i]) { // decreasing
-				if (currentDirection !== "decreasing") {
-					currentDirection = "decreasing"
-					directions.push(currentDirection)
-				}
-			} else { // equal
-				return false
-			}
-		}
-	}
-
-	const incTimes = directions.filter(dir => dir === "increasing").length
-	const decTimes = directions.filter(dir => dir === "decreasing").length
-
-	return incTimes === 1 && decTimes === 1
-}
+import { checkSledJump } from "./checkSledJump"
 
 describe("checkSledJump tests", () => {
 	// it("checkSledJump should be a function", () => {

@@ -1,30 +1,5 @@
 import { describe, expect, it } from "vitest";
-
-const decodeNumbers = (signs) => {
-	if (!signs || typeof signs !== "string") throw new Error()
-
-	const meanings = {
-		".": 1,
-		",": 5,
-		":": 10,
-		";": 50,
-		"!": 100
-	}
-
-	let decoding = signs.split("").map((sign) => {
-		return (sign in meanings) ? meanings[sign] : NaN
-	})
-
-	decoding = decoding.map((value, index) => {
-		const inArrayLimit = decoding[index + 1]
-		const isCurrentMinor = inArrayLimit
-			&& (decoding[index + 1] > decoding[index])
-
-		return (inArrayLimit && isCurrentMinor) ? value * -1 : value
-	})
-
-	return decoding.reduce((prev, current) => prev + current, 0)
-}
+import { decodeNumbers } from "./decodeNumbers"
 
 describe("decodeNumbers tests", () => {
 	// it("decodeNumbers should be a function", () => {

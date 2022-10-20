@@ -11,15 +11,19 @@ const decodeNumbers = (signs) => {
 		"!": 100
 	}
 
-	let res = NaN
-
-	const decoding = signs.split("").map(sign => {
-		if (sign in meanings) return meanings[sign]
+	let decoding = signs.split("").map((sign) => {
+		return (sign in meanings) ? meanings[sign] : NaN
 	})
 
-	res = decoding.reduce()
+	decoding = decoding.map((value, index) => {
+		const inArrayLimit = decoding[index + 1]
+		const isCurrentMinor = inArrayLimit
+			&& (decoding[index + 1] > decoding[index])
 
-	return res
+		return (inArrayLimit && isCurrentMinor) ? value * -1 : value
+	})
+
+	return decoding.reduce((prev, current) => prev + current, 0)
 }
 
 describe("decodeNumbers tests", () => {
@@ -45,5 +49,21 @@ describe("decodeNumbers tests", () => {
 
 	it("Should transform the sign to the number and sum them up", () => {
 		expect(decodeNumbers("...")).toBe(3)
+	})
+
+	it("Should return NaN if sign is not identified", () => {
+		expect(decodeNumbers(".?")).toBe(NaN)
+	})
+
+	it("Should evaluate if the next number in the array is greater, the current number substract or becomes negative", () => {
+		expect(decodeNumbers(".,")).toBe(4)
+	})
+
+	it("Should validate the numbers correctly", () => {
+		expect(decodeNumbers(",...")).toBe(8)
+	})
+
+	it("Should able to decode really big scripts", () => {
+		expect(decodeNumbers(".........!")).toBe(107)
 	})
 })

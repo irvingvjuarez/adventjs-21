@@ -43,4 +43,9 @@ describe("fixFiles tests", () => {
 		const files = ['photo', 'postcard', 'photo', 'photo', 'video']
 		expect(fixFiles(files)).toStrictEqual(['photo', 'postcard', 'photo(1)', 'photo(2)', 'video'])
 	})
+
+	it("Should be able to identify the files with parentheses already", () => {
+		const files = ['file', 'file(1)', 'icon', 'icon(1)', 'icon(1)']
+		expect(fixFiles(files)).toStrictEqual(['file', 'file(1)', 'icon', 'icon(1)', 'icon(1)(1)'])
+	})
 })

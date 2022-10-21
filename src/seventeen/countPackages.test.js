@@ -1,23 +1,5 @@
 import { describe, expect, it } from "vitest";
-
-const countPackages = (carriers, carrierID) => {
-	if (!carriers || !Array.isArray(carriers)) throw new Error()
-	if (!carrierID || typeof carrierID !== "string") throw new Error()
-
-	let counter = 0
-	if (carriers.length <= 0) return counter
-
-	const carrierArr = carriers.find(carrier => carrier[0] === carrierID)
-	const employees = carrierArr[2]
-
-	counter += carrierArr[1]
-
-	employees.forEach(employee => {
-		counter += countPackages(carriers, employee)
-	})
-
-	return counter
-}
+import { countPackages } from "./countPackages"
 
 describe("countPackages tests", () => {
 	// it("countPackages should be a function", () => {

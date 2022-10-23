@@ -10,13 +10,21 @@ const learn = (hrs, coursesHrs) => {
 		const subCoursesHrs = [...coursesHrs]
 		subCoursesHrs.splice(index)
 		subCoursesHrs.forEach(subCourse => {
-			if (subCourse + course === hrs) courses2Take.push(course, subCourse)
+			if (subCourse + course <= hrs) courses2Take.push([course, subCourse])
 		})
 	})
 
-	courses2Take = courses2Take.map(course => coursesHrs.findIndex(courseHr => courseHr === course)).sort()
+	let closestRes = [0, 0]
+	courses2Take.forEach(hrs => {
+		const prevSum = closestRes[0] + closestRes[1]
+		const currentSum = hrs[0] + hrs[1]
 
-	return courses2Take
+		if (currentSum > prevSum) closestRes = hrs
+	})
+
+	closestRes = closestRes.map(res => coursesHrs.findIndex(courseHr => courseHr === res)).sort()
+
+	return closestRes
 }
 
 describe("learn tests", () => {
@@ -50,5 +58,9 @@ describe("learn tests", () => {
 
 	it("Should return the indexes of the courses that will be taken", () => {
 		expect(learn(10, [2, 3, 8, 1, 4])).toStrictEqual([0, 2])
+	})
+
+	it("Should be able to identify the closest number", () => {
+		expect(learn(15, [2, 10, 4, 1])).toStrictEqual([1, 2])
 	})
 })

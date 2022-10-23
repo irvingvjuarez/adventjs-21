@@ -19,14 +19,10 @@ const learn = (hrs, coursesHrs) => {
 		}
 	}
 
-	res = res.sort().map(item => {
+	res = res.map(item => {
 		const index = coursesHrs.findIndex(hour => hour === item)
 		return index
-	})
-
-	console.log({
-		res
-	})
+	}).sort()
 
 	return res
 }

@@ -1,32 +1,21 @@
 import { describe, expect, it } from "vitest"
 
-const learn = (hrs, coursesHrs) => {
-	if (!hrs || typeof hrs !== "number") throw new Error()
-	if (!coursesHrs || !Array.isArray(coursesHrs)) throw new Error()
+const learn = (time, courses) => {
+	if (!time || typeof time !== "number") throw new Error()
+	if (!courses || !Array.isArray(courses)) throw new Error()
 
-	let courses2Take = []
+	let output = [];
+  let totalTime = 0;
+  courses.forEach((item, index) => {
+    courses.slice(index + 1).forEach((nextItem, nextIndex) => {
+      if (item + nextItem <= time && item + nextItem > totalTime) {
+        totalTime = item + nextItem;
+        output = [index, nextIndex + 1 + index];
+      }
+    });
+  });
 
-	coursesHrs.forEach((course, index) => {
-		const subCoursesHrs = [...coursesHrs]
-		subCoursesHrs.splice(index)
-		subCoursesHrs.forEach(subCourse => {
-			if (subCourse + course <= hrs) courses2Take.push([course, subCourse])
-		})
-	})
-
-	if (courses2Take.length <= 0) return null
-
-	let closestRes = [0, 0]
-	courses2Take.forEach(hrs => {
-		const prevSum = closestRes[0] + closestRes[1]
-		const currentSum = hrs[0] + hrs[1]
-
-		if (currentSum > prevSum) closestRes = hrs
-	})
-
-	closestRes = closestRes.map(res => coursesHrs.findIndex(courseHr => courseHr === res)).sort()
-
-	return closestRes
+  return output.length ? output : null;
 }
 
 describe("learn tests", () => {

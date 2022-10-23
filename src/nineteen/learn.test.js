@@ -4,27 +4,19 @@ const learn = (hrs, coursesHrs) => {
 	if (!hrs || typeof hrs !== "number") throw new Error()
 	if (!coursesHrs || !Array.isArray(coursesHrs)) throw new Error()
 
-	const arrSize = coursesHrs.length - 1
-	let sortedCoursesHrs = [...coursesHrs]
-	sortedCoursesHrs = sortedCoursesHrs.sort()
-	let res = []
+	let courses2Take = []
 
-	for(let i = arrSize; i >= 0; i--) {
-		const currentEl = sortedCoursesHrs[i]
-		if (res.length === 0) {
-			if (currentEl < hrs) res.push(currentEl)
-		} else if (res.length === 1) {
-			const firstResEl = res[0]
-			if ((currentEl + firstResEl) === hrs) res.push(currentEl)
-		}
-	}
+	coursesHrs.forEach((course, index) => {
+		const subCoursesHrs = [...coursesHrs]
+		subCoursesHrs.splice(index)
+		subCoursesHrs.forEach(subCourse => {
+			if (subCourse + course === hrs) courses2Take.push(course, subCourse)
+		})
+	})
 
-	res = res.map(item => {
-		const index = coursesHrs.findIndex(hour => hour === item)
-		return index
-	}).sort()
+	courses2Take = courses2Take.map(course => coursesHrs.findIndex(courseHr => courseHr === course)).sort()
 
-	return res
+	return courses2Take
 }
 
 describe("learn tests", () => {

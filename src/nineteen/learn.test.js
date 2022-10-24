@@ -1,22 +1,5 @@
 import { describe, expect, it } from "vitest"
-
-const learn = (time, courses) => {
-	if (!time || typeof time !== "number") throw new Error()
-	if (!courses || !Array.isArray(courses)) throw new Error()
-
-	let output = [];
-  let totalTime = 0;
-  courses.forEach((item, index) => {
-    courses.slice(index + 1).forEach((nextItem, nextIndex) => {
-      if (item + nextItem <= time && item + nextItem > totalTime) {
-        totalTime = item + nextItem;
-        output = [index, nextIndex + 1 + index];
-      }
-    });
-  });
-
-  return output.length ? output : null;
-}
+import { learn } from "./learn"
 
 describe("learn tests", () => {
 	// it("learn should be a function", () => {

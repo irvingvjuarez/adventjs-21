@@ -1,18 +1,5 @@
 import { describe, expect, it } from "vitest";
-
-const pangram = (letter) => {
-	if (!letter || typeof letter !== "string") throw new Error()
-
-	const alphabet = "abcdefghijklmnñopqrstuvwxyz".split("")
-
-	const cleanedLetter = letter.split("")
-		.filter(char => char !== " ") // remove blanks
-		.map(char => char.toLowerCase()) // to lower case
-
-	const hasAllCharacters = alphabet.every(char => cleanedLetter.includes(char))
-
-	return hasAllCharacters
-}
+import { pangram } from "./pangram"
 
 describe("pangram tests", () => {
 	// it("pangram should be a function", () => {

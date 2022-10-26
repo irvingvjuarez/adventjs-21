@@ -7,7 +7,47 @@ const canCarry = (capacity, trip) => {
 
 	if (isInvalid)	throw new Error()
 
-	return false
+	const tripDetail = []
+
+	trip.forEach((stations) => {
+		let stationQuantity = 0
+		stations.forEach((stationData, index) => {
+			if (index === 0) {
+				stationQuantity = stationData
+			} else if (index === 1) {
+				tripDetail.push({
+					position: stationData,
+					quantity: `+ ${stationQuantity}`
+				})
+			} else {
+				tripDetail.push({
+					position: stationData,
+					quantity: `- ${stationQuantity}`
+				})
+			}
+		})
+	})
+
+	tripDetail.sort((a, b) => {
+		const { position: A } = a
+		const { position: B } = b
+
+		if (A > B) return 1
+		if (A < B) return -1
+		return 0
+	})
+
+	let giftsCarried = 0
+	let enoughtCapacity = true
+
+	tripDetail.forEach(detail => {
+		giftsCarried = eval(giftsCarried + detail.quantity)
+		if (giftsCarried > capacity) {
+			enoughtCapacity = false
+		}
+	})
+
+	return enoughtCapacity
 }
 
 describe("can carry tests", () => {
@@ -37,5 +77,13 @@ describe("can carry tests", () => {
 
 	it("Should return a boolean", () => {
 		expect(canCarry(2, [])).toBeTypeOf("boolean")
+	})
+
+	it("Should return true in the following exercise", () => {
+		expect(canCarry(3, [[1, 1, 5], [2, 2, 10]])).toBe(true)
+	})
+
+	it("Should return false in the following execise", () => {
+		expect(canCarry(4, [[2, 5, 8], [3, 6, 10]])).toBe(false)
 	})
 })

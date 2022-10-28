@@ -6,7 +6,32 @@ const canReconfigure = (from, to) => {
 
 	if (isInvalid) throw new Error()
 
-	return false
+	const obj = {}
+	let response = true
+	from = from.toLowerCase().split("")
+	to = to.toLowerCase().split("")
+
+	for(let index in from) {
+		const fromChar = from[index]
+		const toChar = to[index]
+		const currentValues = Object.values(obj)
+
+		const isNotInObj = fromChar in obj === false
+			&& !currentValues.includes(fromChar)
+			&& toChar in obj === false
+			&& !currentValues.includes(toChar)
+
+		if (isNotInObj) {
+			obj[fromChar] = toChar
+		} else {
+			const existing = fromChar in obj ? obj[fromChar] : obj[toChar]
+			const newOne = currentValues.includes(fromChar) ? fromChar : toChar
+
+			if (existing !== newOne) response = false
+		}
+	}
+
+	return response
 }
 
 describe("canReconfigure", () => {
@@ -36,5 +61,9 @@ describe("canReconfigure", () => {
 
 	it("Should return a boolean", () => {
 		expect(canReconfigure("a", "b")).toBeTypeOf("boolean")
+	})
+
+	it("Should return true in the following exercise", () => {
+		expect(canReconfigure('CON', 'JUU')).toBe(false)
 	})
 })

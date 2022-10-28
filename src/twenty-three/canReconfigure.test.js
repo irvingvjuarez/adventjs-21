@@ -6,6 +6,8 @@ const canReconfigure = (from, to) => {
 
 	if (isInvalid) throw new Error()
 
+	if (from.length !== to.length) return false
+
 	const obj = {}
 	let response = true
 	from = from.toLowerCase().split("")
@@ -63,7 +65,16 @@ describe("canReconfigure", () => {
 		expect(canReconfigure("a", "b")).toBeTypeOf("boolean")
 	})
 
+	it("Should return true when the two string don't have the same length", () => {
+		expect(canReconfigure("YE", "ZYY")).toBe(false)
+	})
+
 	it("Should return true in the following exercise", () => {
+		expect(canReconfigure('BAL', 'LIB')).toBe(true)
+	})
+
+	it("Should return false in the following exercise", () => {
 		expect(canReconfigure('CON', 'JUU')).toBe(false)
+		expect(canReconfigure('VALIK', 'KALIK')).toBe(false)
 	})
 })

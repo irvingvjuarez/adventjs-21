@@ -7,33 +7,28 @@ const canReconfigure = (from, to) => {
 	if (isInvalid) throw new Error()
 
 	if (from.length !== to.length) return false
-
 	const obj = {}
-	let response = true
 	from = from.toLowerCase().split("")
 	to = to.toLowerCase().split("")
 
 	for(let index in from) {
 		const fromChar = from[index]
 		const toChar = to[index]
-		const currentValues = Object.values(obj)
 
 		const isNotInObj = fromChar in obj === false
-			&& !currentValues.includes(fromChar)
 			&& toChar in obj === false
-			&& !currentValues.includes(toChar)
 
 		if (isNotInObj) {
-			obj[fromChar] = toChar
+			obj[fromChar] = toChar;
+			obj[toChar] = fromChar
 		} else {
-			const existing = fromChar in obj ? obj[fromChar] : obj[toChar]
-			const newOne = currentValues.includes(fromChar) ? fromChar : toChar
-
-			if (existing !== newOne) response = false
+			if (obj[fromChar] !== toChar || obj[toChar] !== fromChar) {
+				return false
+			}
 		}
 	}
 
-	return response
+	return true
 }
 
 describe("canReconfigure", () => {
@@ -65,9 +60,9 @@ describe("canReconfigure", () => {
 		expect(canReconfigure("a", "b")).toBeTypeOf("boolean")
 	})
 
-	it("Should return true when the two string don't have the same length", () => {
-		expect(canReconfigure("YE", "ZYY")).toBe(false)
-	})
+	// it("Should return true when the two string don't have the same length", () => {
+	// 	expect(canReconfigure("YE", "ZYY")).toBe(false)
+	// })
 
 	it("Should return true in the following exercise", () => {
 		expect(canReconfigure('BAL', 'LIB')).toBe(true)
@@ -75,6 +70,9 @@ describe("canReconfigure", () => {
 
 	it("Should return false in the following exercise", () => {
 		expect(canReconfigure('CON', 'JUU')).toBe(false)
-		expect(canReconfigure('VALIK', 'KALIK')).toBe(false)
+	})
+
+	it("Should return false if the strings have no equal length", () => {
+		expect(canReconfigure("TU", "MAMI")).toBe(false)
 	})
 })

@@ -1,35 +1,5 @@
 import { describe, expect, it } from "vitest";
-
-const canReconfigure = (from, to) => {
-	const isInvalid = !from || typeof from !== "string"
-		|| !to || typeof to !== "string"
-
-	if (isInvalid) throw new Error()
-
-	if (from.length !== to.length) return false
-	const obj = {}
-	from = from.toLowerCase().split("")
-	to = to.toLowerCase().split("")
-
-	for(let index in from) {
-		const fromChar = from[index]
-		const toChar = to[index]
-
-		const isNotInObj = fromChar in obj === false
-			&& toChar in obj === false
-
-		if (isNotInObj) {
-			obj[fromChar] = toChar;
-			obj[toChar] = fromChar
-		} else {
-			if (obj[fromChar] !== toChar || obj[toChar] !== fromChar) {
-				return false
-			}
-		}
-	}
-
-	return true
-}
+import { canReconfigure } from "./canReconfigure"
 
 describe("canReconfigure", () => {
 	// it("Should be a function", () => {

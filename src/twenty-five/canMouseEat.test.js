@@ -1,43 +1,5 @@
 import { describe, expect, it } from "vitest";
-
-const canMouseEat = (direction, game) => {
-	const isInvalid = !direction || typeof direction !== "string"
-		|| !game || Array.isArray(game) === false
-
-	if (isInvalid) throw new Error()
-
-	let x, y
-	let isFood = false
-
-	game.forEach((row, rowIndex) => {
-		row.forEach((cell, cellIndex) => {
-			if(cell.trim() === "m") {
-				x = cellIndex,
-				y = rowIndex
-			}
-		})
-	})
-
-	switch (direction) {
-		case "up":
-			const up = game?.[y - 1]?.[x]
-			if (up?.trim() === "*") isFood = true
-		break;
-		case "down":
-			const down = game?.[y + 1]?.[x]
-			if (down?.trim() === "*") isFood = true
-		break;
-		case "left":
-			const left = game?.[y]?.[x - 1]
-			if (left?.trim() === "*") isFood = true
-		break;
-		default: // right
-			const right = game?.[y]?.[x + 1]
-			if (right?.trim() === "*") isFood = true
-	}
-
-	return isFood
-}
+import { canMouseEat } from "./canMouseEat"
 
 describe("canMouseEat", () => {
 	// it("Should be a function", () => {

@@ -6,7 +6,37 @@ const canMouseEat = (direction, game) => {
 
 	if (isInvalid) throw new Error()
 
-	return false
+	let x, y
+	let isFood = false
+
+	game.forEach((row, rowIndex) => {
+		row.forEach((cell, cellIndex) => {
+			if(cell.trim() === "m") {
+				x = cellIndex,
+				y = rowIndex
+			}
+		})
+	})
+
+	switch (direction) {
+		case "up":
+			const up = game?.[y - 1]?.[x]
+			if (up?.trim() === "*") isFood = true
+		break;
+		case "down":
+			const down = game?.[y + 1]?.[x]
+			if (down?.trim() === "*") isFood = true
+		break;
+		case "left":
+			const left = game?.[y]?.[x - 1]
+			if (left?.trim() === "*") isFood = true
+		break;
+		default: // right
+			const right = game?.[y]?.[x + 1]
+			if (right?.trim() === "*") isFood = true
+	}
+
+	return isFood
 }
 
 describe("canMouseEat", () => {
@@ -36,5 +66,26 @@ describe("canMouseEat", () => {
 
 	it("Should return a boolean as result", () => {
 		expect(canMouseEat("left", [])).toBeTypeOf("boolean")
+	})
+
+	it("Should return true if there is food in given direction", () => {
+		const room = [
+			[' ', ' ', ' '],
+			[' ', ' ', 'm'],
+			[' ', ' ', '*']
+		]
+
+		expect(canMouseEat("down", room)).toBe(true)
+	})
+
+	it("Should be able to analyze correctly left and right", () => {
+		const room2 = [
+			['*', ' ', ' ', ' '],
+			[' ', 'm', '*', ' '],
+			[' ', ' ', ' ', ' '],
+			[' ', ' ', ' ', '*']
+		]
+
+		expect(canMouseEat("right", room2)).toBe(true)
 	})
 })
